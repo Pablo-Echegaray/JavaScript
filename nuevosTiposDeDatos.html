@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //Clase 49 : EcmaScript 2015 (6) - Symbols = es un tipo de dato primitivo, que una vez que es creado su valor se va a mantener privado y para uso interno, generalmente se usan para agregarse como caracteristicas de objetos, como una propiedad, para evitar coliciones de propiedades que pudieran llegar a sobreescribirse. Lo que hacen los symbols es crear un identificador unico que no puede tener una referencia igual a ninguna otra y que no deberia cambiar, por lo que se recomienda crearlo con el constructor "const". Podriamos recorrer el symbol() con un for of o un for in y las "propiededes" seteadas con symbol no van a salir en el iterador ya que no son propiedades como tal. Funcionan como si fueran propiedades privadas.
+
+        /* let id = Symbol("id");
+        let id2 = Symbol("id");
+
+        console.log(id === id2);
+        console.log(id, id2);
+        console.log(typeof id, typeof id2);
+
+        const NOMBRE = Symbol("nombre");
+        const SALUDAR = Symbol("saludar");
+
+        const persona = {
+           [NOMBRE]: "Pablo"
+        } //encerrando el nombre de la propiedad entre corchetes le indicamos que dicha propiedad hace referencia al tipo de dato Symbol() declarado en la linea 19.
+
+        console.log(persona);
+
+        persona.NOMBRE = "Pablo Echegaray";
+        console.log(persona);
+        console.log(persona.NOMBRE);
+        console.log(persona[NOMBRE]); //Symbol()
+        persona[SALUDAR] = function (){
+            console.log("Hola");
+        }
+        console.log(persona);
+        persona[SALUDAR]();
+
+        //for in para recorrer objetos, for of para recorrer arrays
+
+        for (let property in persona){
+           console.log(property); //nombre de la propiedad
+           console.log(persona[property]); //valor de la propiedad
+        }
+        
+        //Para listar los symbols de un objeto determinado podemos utilizar el metodo Object.getOwnPropertySymbols(persona); que nos devuelve todos los symbols que se encuentran en el objeto, en forma de array.
+
+        console.log(Object.getOwnPropertySymbols(persona)); */
+
+        //=======================================
+
+        //Clase 50 : tipo de dato Set : es una estructura similar a la de un array pero de datos únicos, sin repetidos. Siempre hablando de datos primitivos ya que en cuanto a datos de tipo objeto en la memoria de JS cada uno de ellos es una referencai única. Los sets son una suerte de colección de datos en un objeto.
+
+        /* const set = new Set([1,2,3,3,4,5, true, false, false, {}, {}, "hola", "Hola"]);
+
+        console.log(set);
+        console.log(set.size); //equivalente a array.length
+        
+        //manera alternativa de agregar datos a un set
+        const set2 = new Set();
+        set2.add(1);
+        set2.add(2);
+        set2.add(3);
+        set2.add(true);
+        set2.add(false);
+        set2.add(true);
+        set2.add({});
+        console.log(set2);
+        console.log(set2.size);
+
+        console.log("Recorriendo set");
+
+        for (item of set){
+            console.log(item);
+        }
+        
+        console.log("Recorriendo set2");
+        set2.forEach(item => console.log(item))
+
+        //Si bien el tipo de dato Set se comporta como un array, no lo es. De manera que si queremos acceder a un elemento en particular de nuestro Set, set[el] nos devolvera "undefined"; para poder acceder al elemento en particular debemos transformar nuestro set en un Array. De la siguiente manera: 
+
+        let arr = Array.from(set);
+        console.log(`Primer elemento del set convertido en array: ${arr[0]}`);
+
+        //Para eliminar datos de un set: 
+        set.delete("Hola");
+        console.log(set);
+
+        //Para comprobar si existe determinado elemento:
+        console.log(set.has("hola")); //true or false
+
+        //Para limpiar un set y dejarlo vacio: 
+        set2.clear();
+        console.log(set2); */
+
+//==================================================
+
+        //Clase 51 : Map => es una suerte de colección de datos, como un mapa, un diccionario , un objeto especial que contiene data que puede ser iterada. En sínteis, es un objeto iterador. Tanto el Map como el Set son tipos de datos complejos como el array, el object, las funciones, de manera que se recomienda utilizar el constructor const para ellos. A diferencia de los Symbols que son tipos de datos primitivos. A diferencia de los Set que esta integrado por valores únicos, en los Map tenemos un juego de key, value.
+
+        /* const mapa = new Map();
+
+        //En el tipo de dato Set agregabamos valores con el metodo add. Ahora, como en una POO que tenemos metodos setters y getters (clase 25), los maps se comportan de manera similar en cuanto a como agregar datos. La primer forma para agregar valores es con el metodo .set() que nos pide una llave y un valor, estos en forma de parametros.
+        mapa.set("nombre", "Pablo");
+        mapa.set("apellido", "Echegaray");
+        mapa.set("edad", 25);
+
+        console.log(mapa);
+        //Para saber la cantidad de elementos que tiene un map: size al igual que en set.
+        console.log(mapa.size);
+        console.log(mapa.has("correo"));
+        //Para mandar un valor determinado a la consola lo podemos hacer con el metodo get(), ya que tenemos acceso al metodo set().
+        console.log(mapa.get("nombre"));
+        //Para reescribir un valor simplemente lo hacemos con el metodo set nuevamente e indicando el nombre de la llave a reescribir.
+        mapa.set("nombre", "Jonathan");
+        console.log(mapa.get("nombre"));
+        //Eliminamos elementos igual que en el set
+        mapa.delete("apellido");
+        console.log(mapa);
+
+        //Iterar un Map. Con los corchetes destructuramos la llave y el valor [key, value].
+        for (let [key, value] of mapa){
+            console.log(`Llave: ${key}, Valor: ${value}`);
+        }
+
+        //En un objeto primitivo nuestras llaves son cadenas de texto, en un Map nuestras llaves no necesariamente pueden ser solo cadenas de texto, sino que pueden ser cualquier tipo de dato(null, undefined, NaN, Boolean, Object, etc)
+
+        mapa.set(19, "diecinueve");
+        mapa.set(false, "falso");
+        mapa.set({},{});
+        console.log(mapa);
+
+        //Constuir un Map con todos sus valores desde el inicio (para c/ llave valor le correspondera un par de corchetes encerrando los mismos).
+
+        const mapa2 = new Map([
+            ["nombre", "Ali"],
+            ["edad", 7],
+            ["animal", "perro"]
+        ]);
+        console.log(mapa2);
+
+        //Almacenamos en una variable toda la lista de las llaves, y en otra toda la lista de los valores; con ayuda de la destructuración y de dos métodos que son keys y value respectivamente.
+
+        const llavesMapa2 = [...mapa2.keys()];
+        const valoresMapa2 = [...mapa2.values()];
+
+        console.log(llavesMapa2);
+        console.log(valoresMapa2); */
+
+        // Los Sets se parecen mas a los arreglos y los Maps se parecen mas a los objetos.
+
+//=============================================
+
+
+        //Clase 52: WeakSets & WeakMaps: Son una suerte de hermanos pequeños de Set y Map, que solo pueden almacenar referencias débiles, es decir, sus llaves solo pueden ser de tipo objetos. Al generar referencias debiles a la hora en que el navegador lleva a cabo la limpieza de todo aquello que ya no necesita, estas referencias débiles mejoran la perfomance de nuestra aplicación.
+        //consola del navegador > memory > bote de basura
+
+        //Los WeakSets & WeakMaps no pueden ser recorridos, como tales no son iterables, tampoco podemos utilizar el metodo .clear() de los Set y los Map que eliminan elementos de un solo saque, solo podemos eliminar de uno en uno. También carecen de la propiedad size.
+
+        //WeakSets: podrá utilizar el metodo delete() para borrar, add para agregar valores, has() para comprobar la existencia de un elemento interno.
+
+        //WeakMaps: podemos obetener una llave con el metodo get(), establecer una propiedad con el metodo set(), has() para comprobar la existencia de un elemento interno y delete para borrar.
+
+        //En los WeakSet no podemos agregar todos los valores de una sola vez, sino que debemos ir agregandolos de a uno con el método add.
+
+        /* const ws = new WeakSet();
+
+        let valor1 = {"valor1": 1};
+        let valor2 = {"valor2": 2};
+        let valor3 = {"valor3": 3};
+
+        ws.add(valor1);
+        ws.add(valor2);
+        console.log(ws);
+
+        console.log(ws.has(valor1));
+        console.log(ws.has(valor3));
+
+        ws.delete(valor2);
+        console.log(ws);
+
+        ws.add(valor2);
+        ws.add(valor3);
+
+        //Cuando alguna de las referencias de un WeakSet se vuelve null automáticamente se elimina.
+
+        let intervalo = setInterval(()=>console.log(ws), 1000);
+        
+        //Cuando se ejecute el setTimeout y cada referencia pase a tener un valor nulo, automaticamente el WeakSet se limpiará y quedará vacío.
+        setTimeout(()=>{
+            valor1 = null;
+            valor2 = null;
+            valor3 = null;
+        }, 2500);
+
+        setTimeout(()=>{
+            clearInterval(intervalo);
+        }, 9000); */
+
+        //WeakMap: tambien solo permite llaves de tipo objeto que esten referenciadas en alguna variable.
+      
+       /* const wm = new WeakMap();
+       let llave1 = {};
+       let llave2 = {};
+       let llave3 = {};
+
+       wm.set(llave1, 1);
+       wm.set(llave2, 2);
+       console.log(wm);
+
+       console.log(wm.has(llave1));
+       console.log(wm.has(llave3));
+
+       console.log(wm.get(llave1));
+       console.log(wm.get(llave2));
+       console.log(wm.get(llave3));
+
+       wm.delete(llave2);
+       console.log(wm);
+
+       wm.set(llave2, 2);
+       wm.set(llave3, 3);
+       console.log(wm);
+ */
+//Una utilizacion practica de esto seria similar a la de las variables de estado en frameworks como React o Vue en cuanto a la limpieza de estados o cambios de los mismos. Una variable de estado objeto en un framework seria similar a un weakMap en JS y una variable de estado array seria similar a un WeakSet en JS.
+//Al igual que en los weakSet la nulificación de las variables de referencia elimina las llaves y/o valoreres internos del elemento.
+
+//=============================================
+//Clase 53: Iterables & Iterators 
+
+//ITERABLE = Cuando hablamos que una variable o un tipo de dato es iterable, significa que es una estructura de datos lineal que hace que sus elementos sean publicos y se puedan recorrer; por ejemplo los arreglos, los strings, los maps, los sets, los nodos del DOM, etc.
+
+//ITERADOR = Lo que se conoce como iterador es justamente la interfaz que es una especie de apuntador que va recorriendo los elementos de la misma estructura de datos.
+
+/* const iterable = [1, 2, 3, 4, 5];
+//accedemos al iterador de nuestro iterable
+const iterador = iterable[Symbol.iterator]();
+
+console.log(iterable);
+console.log(iterador); */
+//.next() nos ejecuta el iteraodor una vez y nos trae un objeto con dos propiedades : value, que nos induca el elemento en particular de nuestro iterable; done, que nos devuelve un boolean a partir del cual podemos saber si nuestro iterable aun tiene elementos por recorrer. next va guardando en que elemento se encuentra al momento de la iteracion, y avanza de a un elemento.
+/* console.log(iterador.next());
+console.log(iterador.next());
+console.log(iterador.next());
+console.log(iterador.next());
+console.log(iterador.next());
+console.log(iterador.next()); */
+
+/* let next = iterador.next();
+//!next.done : mientras la propiedad done sea falsa se ejecutara el ciclo.
+while(!next.done){
+    console.log(next.value);
+    next = iterador.next();
+    // se ira guardando en la variable next el nuevo valor que corresponde al nuevo elemento en el cual se encuantra al momento de iterar.
+} */
+//===========================================
+//Clase 54 : Generators : es una funcion que nos permite trabajar de una manera mas amigable con la interfaz de los iteradores de un elemento iterable. Para indicarle a JS que una funcion sera una funcion genradora, debemos agregarle un * luego de la palabra "function" sin espacios. Lo que nos permiten los generadores es volver iterable una funcion. Su return es con la palabra "yield" la cual nos permite ir retornando valores sin que la iteración se detenga.
+
+/* function* iterable(){
+ yield "hola";
+ console.log("Hola consola");
+ yield "hola2";
+ console.log("Seguimos con mas instrucciones de nuestro codigo");
+ yield "hola3";
+ yield "hola4";
+}
+//la generator me deja acceder a al iterator de manera automatica sin tener que acceder mediante "Symbol.iterator"
+let iterador = iterable(); */
+/* console.log(iterador.next());
+console.log(iterador.next());
+console.log(iterador.next());
+console.log(iterador.next());
+console.log(iterador.next()); */
+
+/*for(let y of iterador){
+    console.log(y);
+}
+
+//almacenamos en un array cada valor retornado (yield) de la iteracion de la funcion.
+
+ const arr = [...iterable()];//...spread operator
+console.log(arr);
+
+function cuadrado(valor){
+    setTimeout(()=>{
+        return console.log({valor, resultado: valor*valor})
+    }, Math.random() * 1000);
+} */
+//asincronia no bloqueante, por lo cual los valores devueltos seguramente vuelvan desordenados.
+/* function* generador (){
+    console.log("Inicia Generator");
+    yield cuadrado(2);
+    yield cuadrado(3);
+    yield cuadrado(4);
+    yield cuadrado(5);
+    console.log("Fin Generator");
+}
+
+let gen = generador();
+
+for(let y of gen){
+    console.log(y);
+} */
+
+//============================================
+
+//Clase 55: Proxies => Es un nuevo mecanismo que nos permite crear un objeto basado en un objeto literal inicial. Muy similar a cuando se programa con orientacion a objetos, donde hay una clase padre que es la que le hereda ciertas caracteristicas a cada nueva instancia, pero en este caso el proxie trabaja con un objeto literal y no con una clase. De manera que el Proxie va a recibir un objeto literal, va a generar una copia, y va a permitir que realicemos ciertas operaciones como validacion de propiedades, de tipos de datos; dentro de la copia que se esta creando del objeto original, es decir, que tendremos un medio de vinculacion entre el objeto original y la instancia generada del mismo. Todo esto sera administrado a traves de un objeto especial que se conoce como handler (manejador).
+
+/* const persona = {
+    nombre: "",
+    apellido: "",
+    edad: 0,
+}
+
+//posee un parametro set que es donde podemos llevar a cabo todas las validaciones que queramos.
+const manejador = {
+    set(obj, prop, valor){
+//validamos que no se agreguen nuevas propiedades
+      if(Object.keys(obj).indexOf(prop) === -1){
+        return console.error(`La propiedad "${prop}" no existe en el objeto persona`);
+      }  
+
+      if ((prop === "nombre" || prop === "apellido") && !(/^[A-Za-zÑñÁáÉéÍíÓóÚúüÜ\s]+$/g.test(valor))){
+          return console.error(`La propiedad "${prop}" solo acepta letras y espacios en blanco`);
+      }
+      obj[prop] = valor;
+      //cuando no tenemos validacion por hacer, de esta manera se lo indicamos al handler.
+      //obj=persona-prop=nom,ape,ed-valor=""
+    }
+}
+
+const pablo = new Proxy(persona, manejador)//recibe como parametros el objeto y el manejador.
+//El Proxy mantiene una vinculacion con el objeto original, a diferecia de cuando trabajamos con el objeto asign del objeto Object a partir del cual generamos una copia y comenzamos a trabajar en la copia sin modificar al padre.
+pablo.nombre ="Pablo";
+pablo.apellido = "Echegaray";
+pablo.edad = 25; 
+pablo.email = "pabloechegaray95@gamil.com";
+console.log(pablo); */
+
+//Object.keys : nos da la lista de las llaves de un objeto.
+//indexOf() : buscar coincidencias en un lugar determiando de determinados elementos
+
+//[A-Za-zÑñÁáÉéÍíÓóÚúüÜ\s]+$/g.test => letras y espacios en blanco
+
+//Sintesis: El Proxy hace una vinculacion entre el objeto original y el objeto copia, y a traves de su manejador podemos hacer validaciones antes de hacer la asignacion.
+
+//============================================
+//Clase 56 : Propiedades Dinámicas de los Objetos.
+
+/* const objUsuarios = {
+};
+console.log(objUsuarios);
+
+const usuarios = ["Pablo", "Sofi", "Vladi", "Ali"];
+usuarios.forEach((usuario, index) => objUsuarios[`id_${index}`] = usuario)
+
+console.log(objUsuarios);
+
+//Lo que va a indicar que a una propiedad la pueda definir de manera dinámica es la sintaxis de los corchetes.
+
+let aleatorio = Math.round(Math.random()*100*5);
+const objUsuarios2 = {
+    propiedad: "valor",
+    [`id_${aleatorio}`]: "Valor Aleatorio"
+}
+console.log(objUsuarios2); */
+
+//Las propiedades dinamicas pueden servirnos entre otras cosas para genrar url's amigables.
+
+//================================
+//Clase 57 : this => en JS del lado del cliente "this" apunta al objeto global window.
+
+/* console.log(this); //window
+
+this.nombre = "Contexto Global"; //propiedad asignada al objeto window
+console.log(this.nombre); //window
+
+function imprimir(){
+    console.log(this.nombre);
+}//contexto global
+
+imprimir();
+
+const obj = {
+    nombre: "Contexto Objeto",
+    imprimir: function(){
+        console.log(this.nombre);
+    }
+}
+
+obj.imprimir();//contexto objeto
+
+const obj2 = {
+    nombre: "Contexto Objeto 2",
+    imprimir
+}
+
+obj2.imprimir();//obj2
+
+const obj3 = {
+    nombre : "Contexto Objeto 3",
+    imprimir: ()=>{
+        console.log(this.nombre)//window
+    }
+}
+obj3.imprimir();
+//Las arrow functions no crean un scope local, sino que "this" dentro de las mismas hara referencia al scope donde fue creado el objeto que la contiene, en este caso, window.
+
+function Persona(nombre){
+    this.nombre = nombre; */
+
+    /* return function(){
+        console.log(this.nombre, 45);
+    } */
+ /*    return ()=> console.log(this.nombre);
+}
+
+let pablo = new Persona ("Pablo");
+pablo(); *///como la funcion constructora retorna una funcion, debemos ejecutar neustra variable para que se ejecuten los metodos.
+
+//Cada funcion crea un contexto, excepto las arrow functions que heredan el contexto del elemento que las contiene. En este caso, la funcion anonima que es retornada crea un nuevo contexto, y dentro del mismo como no existe la propiedad nombre, directamente va a buscar aquella que se encuentra en el contexto global. Si en todo caso utilizaramos una arrow function, no nos estaria creando un nuevo contexto y en ese caso this.nombre seria el valor de nuestra variable "pablo";
+
+//=======================================
+
+//Clase 58 : call, apply, bind : nos sirven cuando necesitamos conservar la referencia de un scope en particular para utilizarlo en una invocacion en algun codigo.
+
+/* console.log(this);
+this.lugar = "Contexto Global";
+
+function saludar(saludo, aQuien){
+    console.log(`${saludo} ${aQuien} desde el ${this.lugar}`);
+}
+
+saludar();
+
+const obj = {
+    lugar: "Contexto Objeto",
+}
+
+saludar.call(obj, "Hola", "Pablo"); //promer parametro corresponde a un objeto que redefinira el contexto
+saludar.apply(obj, ["Adios", "Echegaray"]);//si se le pasa como primer parametro "null" o "this", la ejecucion tomara el contexto global o el contexto al cual pertenezca la misma.
+
+const persona = {
+    nombre: "Pablo",
+    saludar: function(){
+        console.log(`Hola ${this.nombre}`)
+    }
+}//si la funcion del metodo saludar es una arrow function, el "this" sera window, pero al ser una funcion comun, su "this" es el propio objeto.
+persona.saludar();
+
+const otraPersona = {
+    saludar: persona.saludar.bind(persona)//de esta manera a la hora de ejecutar este metodo tomara el contexto del objeto persona, de modo que no nos devuelva "undefined" en la propiedad nombre, sino que tome la misma del obj persona. De lo contrario buscara la propiead nombre en el contexto global.
+}
+otraPersona.saludar() */
+
+//=================================================================
+
+//CLase 59: JSON => standard para el almacenamiento, recepcion y envio de datos.
+
+console.log(JSON);
+console.log(JSON.parse("{}"));//nos transforma una cadena en datos que JavaScript pueda validar.
+console.log(JSON.parse("[1,2,3,4]"));
+
+console.log(JSON.stringify([1, 2, 3])); //convierte un objeto JavaScript en formato de texto JSON.
+
+//==============================================================
+
+//Clase 60: WEB APIs => Anglisismo de "Application Programming Interfaces".
+//En un lenguaje de rpogramacion una API es aquella serie de objetos y mecanismos que tiene el lenguaje implementado en ciertas areas (en este caso en JS del lado del navegador), para poder interactuar con todo aquello que se encuentra en el navegador {DOM(standard),CSSOM(standard),BOM(not-standard[c/ navegador maneja algunas cuestiones internas de manera diferente]),WEB APIs}
+
+//Algunas APIs WEB: -Events -Forms -AJAX/Fetch -History -Web Storage -Geolocation -Drag&Drop -Indexed DB -Canvas -MatchMedia(media querys css), etc
+
+let texto = "Armate y prendete eseeee..."
+const hablar = (texto) => speechSynthesis.speak(new SpeechSynthesisUtterance(texto));
+hablar(texto);//api que habla lo que se le pasa como parametro (no me funciona);
+
+//=================================
+
+//Clase 61 : DOM
+
+console.log(document.head);
+console.log(document.body);
+console.log(document.documentElement);//<html>
+console.log(document.doctype);
+console.log(document.charset);
+console.log(document.title);
+console.log(document.links);
+console.log(document.images);
+console.log(document.forms);
+console.log(document.styleSheets);
+console.log(document.scripts);
+console.log(document.getSelection().toString);//mapea aquello que fue seleccionado (sombreado) en el DOM. (es necesario meterlo dentro de un setTimeOut porque sino se ejecuta de inmediato y no da tiempo a seleccionar nada).
+
+//===============================
+//Seguimos en otro archivo.
+
+
+
+    </script>
+</body>
+</html>

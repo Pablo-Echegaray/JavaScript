@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script src="jsBasico.js"></script>
+    <script>
+        //Expresiones Regulares : 
+
+        //-Son una secuencia de caracteres que forma un patrón de búsqueda, principalmente utilizada para la búsqueda de patrones de cadenas de caracteres.
+        //Bandera: g - (global) = en el caso que le pasemos como patron de busqueda una palabra que debe encontrarla todas las veces que aparecera en un texto, con la bandera "g" le indicamos que en la primer coincidencia del patron no se detenga, sino que continue.
+        //Bandera: i = ignora mayusculas y minusculas.
+
+        /* let cadena = " lorem ipsum dolor sit amet consecueter lorem ";
+
+        let expReg = new RegExp("lorem", "ig");
+        console.log(expReg.test(cadena)); //devuelve true o false
+        console.log(expReg.exec(cadena)); //devuelve un array con varios items de informacion, entre una de ellas, la posicion donde encontro la ultima aparicion de la expresion.
+        let expReg2 = /lorem/ig;
+        console.log(expReg2.test(cadena));
+        console.log(expReg2.exec(cadena));
+        let expReg3 = /[0-9]/ig; //valida la aparicion de cualquier numero del 0 al 9 n cantidad de veces en n posicion.
+        let expReg4 = /lorem{3,}/ig;  *///las llaves validan que un determinado patron se repita n cantidad de veces. Si se le indica solo el primer numero, quiere decir que minimo se debe repetir la cantidad de veces del primer valor, hasta indefinidamente.
+
+    </script>
+</body>
+
+</html>
